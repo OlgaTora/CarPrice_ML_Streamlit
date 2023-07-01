@@ -30,7 +30,7 @@ def preprocess_data(df: pd.DataFrame):
     return df
 
 
-def predict(df, path="app/data/model_xgb.pickle"):
+def predict(df, path="app/data/model_lgbm.pickle"):
     model = load_model(path)
     prediction = model.predict(df)
     return prediction

@@ -22,36 +22,67 @@ def show_main_page():
     st.title('Рекомендательный сервис по определению стоимости автомобиля')
     st.header('Попробуй - убедись!')
     st.image(image)
+
     st.markdown("""
-        <style type="text/css">
+        <style>
         [data-testid=stSidebar] {
             background-color: rgb(235, 102, 0);
             color: #FFFFFF;
+            }
+        .stButton > button {
+            box-shadow: inset 0px 1px 0px 0px #fff6af;
+	        background: linear-gradient(to bottom, #ffec64 5%, #f79d0d 100%);
+	        background-color: #ffec64;
+	        border-radius: 6px;
+	        border: 1px solid #ffaa22;
+        	display: inline-block;
+	        cursor: pointer;
+	        color: #000000;
+	        font-family: Roboto;
+        	font-size: 20px;
+	        font-weight: bold;
+	        padding: 10px 35px;
+	        text-shadow: 0px 1px 0px #ffee66;
         }
-        [data-testid=stButton] {
-            color: rgb(1,1,100)
-            }       
+
+        .pretty-font {
+            font-size:50px !important;
+            color:rgb(235, 102, 0)
+        }
+        
+        .st-by {
+            background:#fb9e25;
+            color:#ffffff
+        }
+         
+        .st-aw{
+            background:#000000;            
+        }  
+        .StyledThumbValue{
+            color:#ffffff
+        }
         </style>
     """, unsafe_allow_html=True)
 
 
 def write_user_data(df):
-    click = st.button('Ваши данные')
+    click = st.button('Проверьте ваши данные')
     if click:
         st.write('## Ваши данные')
         st.write(df)
 
 
 def write_prediction(prediction):
+    prediction = round(prediction[0])
     if prediction > 0:
-        st.header('Рекомендуемая цена на данный автомобиль')
-        st.write(prediction)
+        st.markdown('<p class="pretty-font">Рекомендуемая цена на данный автомобиль:</p>', unsafe_allow_html=True)
+        st.header(prediction)
     else:
         st.write('## Введите запрос!')
 
 
 def process_side_bar_inputs():
-    st.sidebar.header('Заданные пользователем параметры')
+    st.sidebar.header('Заданные пользователем параметры:')
     user_input_df = sidebar_input_features()
     write_user_data(user_input_df)
     df = open_data()
@@ -114,4 +145,3 @@ def sidebar_input_features():
 
 if __name__ == "__main__":
     process_main_page()
-
